@@ -1,33 +1,33 @@
 #include <Arduino.h>
 
-#define LED 5
-#define BUTTON 4
+#define LED 16
 
-int buttonState;
+const int freq = 60;
+const int resolution = 10; // 0-16 bit
+const int channel = 0;
+/*CHANNEL: each channel has 6 GPIO port
+0: 16-17-18-19-21-22
+1: 0-4-5-12-13-14
+2: 2-12-13-14-15-16
+3: ...*/
 
 void setup()
 {
-  // put your setup code here, to run once:
-  Serial.begin(9600);
-  pinMode(LED, OUTPUT);
-  pinMode(BUTTON, INPUT);
-
-  digitalWrite(LED, LOW) ;
+  ledcSetup(channel, freq, resolution);
+  ledcAttachPin(LED, channel);
 }
 
 void loop()
 {
-  // put your main code here, to run r+epeatedly:
-  buttonState = digitalRead(BUTTON);
-
-  if (buttonState == HIGH)
+  for (int i = 0; i <= 255; i++)
   {
-    Serial.println("LED ON");
-    digitalWrite(LED, HIGH);
+    ledcWrite(channel, i);
+    delay(20);
   }
-  else
+
+  for (int i = 255; i >= 0; i--)
   {
-    Serial.println("LED OFF");
-    digitalWrite(LED, LOW);
+    ledcWrite(channel, i);
+    delay(20);
   }
 }
