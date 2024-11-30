@@ -35,7 +35,7 @@ void loop()
   {
     Serial.println("Motion detected!");
     digitalWrite(LED, HIGH); // bật LED
-    motion_detect = true; // đánh dấu đã phát hiện chuyển động
+    motion_detect = true;    // đánh dấu đã phát hiện chuyển động
   }
 
   //
